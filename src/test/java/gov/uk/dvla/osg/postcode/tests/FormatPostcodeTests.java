@@ -1,11 +1,31 @@
 package gov.uk.dvla.osg.postcode.tests;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import gov.uk.dvla.osg.postcode.Postcode;
 
 class FormatPostcodeTests {
+    
+    List<String> zips = new ArrayList<String>();
+
+    @Before
+    private void Setup() {
+        
+      //Valid ZIP codes
+      zips.add("SW1W 0NY");  
+      zips.add("PO16 7GZ");  
+      zips.add("GU16 7HF");  
+      zips.add("L1 8JQ");  
+
+      //Invalid ZIP codes
+      zips.add("Z1A 0B1");
+      zips.add("A1A 0B11");
+    }
     
     @Test
     void Format_NoSpacesWithoutZeros_CorrectlyFormatted() {
@@ -95,7 +115,15 @@ class FormatPostcodeTests {
         testStr = "SA*6A7JL";
         assertEquals("SA6A 7JL", Postcode.Format(testStr));
         
-        testStr = "SA6A*";
-        assertEquals("SA 6A", Postcode.Format(testStr));
+        testStr = "SA6**";
+        assertEquals("SA 6", Postcode.Format(testStr));
+    }
+    
+    @Test
+    void Validate_ValidPostcodeList_AllReturnTrue() {
+        for (String zip : zips)
+        {
+            assertFalse(Postcode.validate(zip));
+        }
     }
 }

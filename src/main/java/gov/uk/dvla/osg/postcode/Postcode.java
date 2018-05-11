@@ -1,7 +1,10 @@
 package gov.uk.dvla.osg.postcode;
 
+import java.util.regex.Pattern;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+
 
 public class Postcode {
     private static String inCode = "";
@@ -14,8 +17,8 @@ public class Postcode {
         if (str.length() <= 4) {
             return str;
         }
-
-        if (str.equals("AA22") || str.equals("AA88") || str.equals("AA89") || str.equals("AA90") || str.equals("AA91") || str.equals("WALES") || str.equals("BT00")) {
+        
+        if (StringUtils.equalsAnyIgnoreCase(str, new String[] {"AA22","AA88", "AA89", "AA90", "AA91", "WALES", "BT00"})) {
             return "";
         }
 
@@ -46,5 +49,14 @@ public class Postcode {
 
         String temp = outCode + " " + inCode;
         return temp.replace("*", "");
+    }
+    
+    public static boolean validate(String postcode) {
+        
+        //final String regex = "^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$";
+        final String regex = " (GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY]))))\\s?[0-9][A-Z-[CIKMOV]]{2})";
+        Pattern pattern = Pattern.compile(regex);
+        
+        return pattern.matcher(postcode).matches();
     }
 }
