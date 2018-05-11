@@ -6,10 +6,22 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 
+/**
+ * Utility class for validating and formatting UK Postcodes.
+ * @author OSG
+ */
 public class Postcode {
+    
     private static String inCode = "";
     private static String outCode = "";
 
+    /**
+     * Formats a postcode by removing non-required zeros (e.g. S01 1JJ => S1 1JJ), ensuring that outcode and incode parts
+     * are separated by a space (e.g. S11JJ => S1 1JJ) and converting the string to uppercase (e.g. s1 1jj => S1 1JJ).
+     * Note: this does not validate the postcode. If validation is required, use Postcode.validate() before using this method.
+     * @param str
+     * @return formatted postcode
+     */
     public static String Format(String str) {
         
         str = StringUtils.deleteWhitespace(str).toUpperCase();
@@ -51,9 +63,15 @@ public class Postcode {
         return temp.replace("*", "");
     }
     
+    /**
+     * Validates the supplied string to check if it conforms to Royal Mail rules for a valid postcode format.
+     * Postcodes can be formatted with a space or without.
+     * @param postcode
+     * @return true if valid
+     */
     public static boolean validate(String postcode) {
         
-        //final String regex = "^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$";
+        //'official' regex, once used by Roayl Mail
         final String regex = " (GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY]))))\\s?[0-9][A-Z-[CIKMOV]]{2})";
         Pattern pattern = Pattern.compile(regex);
         

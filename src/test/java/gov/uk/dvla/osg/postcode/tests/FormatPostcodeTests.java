@@ -119,11 +119,4 @@ class FormatPostcodeTests {
         assertEquals("SA 6", Postcode.Format(testStr));
     }
     
-    @Test
-    void Validate_ValidPostcodeList_AllReturnTrue() {
-        for (String zip : zips)
-        {
-            assertFalse(Postcode.validate(zip));
-        }
-    }
 }
