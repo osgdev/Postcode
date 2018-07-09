@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class Address {
+public class AddressFormatter {
 
     /**
      * <p>Removes unneccessary spaces and commas from an address line.</p>
@@ -16,7 +16,7 @@ public class Address {
      * @param line Address line to format.
      * @return Formatted address line.
      */
-    public static String formatAddressLine(String line) {
+    public static String formatLine(String line) {
         // searches for all whitespace longer than a single space
         String temp = Pattern.compile("\\s+").matcher(line).replaceAll(" ");
         // trim extra spaces from start and end of string

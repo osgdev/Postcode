@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
  * Utility class for validating and formatting UK Postcodes.
  * @author OSG
  */
-public class Postcode {
+public class PostcodeFormatter {
     
     private static String inCode = "";
     private static String outCode = "";

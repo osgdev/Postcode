@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import gov.uk.dvla.osg.address.Address;
+import gov.uk.dvla.osg.address.AddressFormatter;
 
 class AddressLineFormatTests {
 
@@ -12,7 +12,7 @@ class AddressLineFormatTests {
     void Fromat_AlreadyFormatted_NoChange() {
         String line = "11 Evergreen Terrace";
         String result = "11 Evergreen Terrace";
-        String formatted = Address.formatAddressLine(line);
+        String formatted = AddressFormatter.formatLine(line);
         assertEquals(formatted, result);
     }
 
@@ -20,7 +20,7 @@ class AddressLineFormatTests {
     void Fromat_ExtraSpaces_SpacesRemoved() {
         String line = "11  Evergreen  Terrace";
         String result = "11 Evergreen Terrace";
-        String formatted = Address.formatAddressLine(line);
+        String formatted = AddressFormatter.formatLine(line);
         assertEquals(formatted, result);
     }
     
@@ -28,7 +28,7 @@ class AddressLineFormatTests {
     void Fromat_WithComma_CommaRemoved() {
         String line = "11, Evergreen Terrace";
         String result = "11 Evergreen Terrace";
-        String formatted = Address.formatAddressLine(line);
+        String formatted = AddressFormatter.formatLine(line);
         assertEquals(formatted, result);
     }
     
@@ -36,7 +36,7 @@ class AddressLineFormatTests {
     void Fromat_WithCommaAndExtraSpaces_CorrectlyFormatted() {
         String line = "11,  Evergreen  Terrace   ";
         String result = "11 Evergreen Terrace";
-        String formatted = Address.formatAddressLine(line);
+        String formatted = AddressFormatter.formatLine(line);
         assertEquals(formatted, result);
     }
 }

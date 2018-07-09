@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import gov.uk.dvla.osg.address.Postcode;
+import gov.uk.dvla.osg.address.PostcodeFormatter;
 
 @RunWith(Parameterized.class)
 public class ParameterizedTests {
@@ -50,6 +50,6 @@ public class ParameterizedTests {
     
     @Test
     public void test() {
-        assertEquals(expected, Postcode.validate(input), "Testing: " + input);
+        assertEquals(expected, PostcodeFormatter.validate(input), "Testing: " + input);
     }
 }
