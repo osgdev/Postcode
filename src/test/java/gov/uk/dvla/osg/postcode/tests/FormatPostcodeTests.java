@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import gov.uk.dvla.osg.postcode.Postcode;
+import gov.uk.dvla.osg.address.Postcode;
 
 class FormatPostcodeTests {
     

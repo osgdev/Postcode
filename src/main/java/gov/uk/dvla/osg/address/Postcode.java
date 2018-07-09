@@ -1,4 +1,4 @@
-package gov.uk.dvla.osg.postcode;
+package gov.uk.dvla.osg.address;
 
 import java.util.regex.Pattern;
 
@@ -18,12 +18,12 @@ public class Postcode {
      * Formats a postcode by removing non-required zeros (e.g. S01 1JJ => S1 1JJ), ensuring that outcode and incode parts
      * are separated by a space (e.g. S11JJ => S1 1JJ) and converting the string to uppercase (e.g. s1 1jj => S1 1JJ).
      * Note: this does not validate the postcode. If validation is required, use Postcode.validate() before using this method.
-     * @param str
-     * @return formatted postcode
+     * @param postcode The unformatted postcode.
+     * @return Postode formatted with spaces.
      */
-    public static String Format(String str) {
+    public static String Format(String postcode) {
         
-        str = StringUtils.deleteWhitespace(str).toUpperCase();
+        String str = StringUtils.deleteWhitespace(postcode).toUpperCase();
         
         if (str.length() <= 4) {
             return str;
@@ -65,8 +65,8 @@ public class Postcode {
     /**
      * Validates the supplied string to check if it conforms to Royal Mail rules for a valid postcode format.
      * Postcodes can be formatted with a space or without.
-     * @param postcode
-     * @return true if valid
+     * @param postcode The postcode to validate.
+     * @return True if a valid UK postcode.
      */
     public static boolean validate(String postcode) {
         
