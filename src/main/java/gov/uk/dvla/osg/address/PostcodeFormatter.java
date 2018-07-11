@@ -13,7 +13,10 @@ public class PostcodeFormatter {
     
     private static String inCode = "";
     private static String outCode = "";
-
+    private static final String[] IGNORELIST = new String[] {"AA22","AA88", "AA89", "AA90", "AA91", "AA99", "WALES", "BT00"};
+    //'official' regex, once used by Roayl Mail
+    private static final String REGEX = " (GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY]))))\\s?[0-9][A-Z-[CIKMOV]]{2})";
+    
     /**
      * Formats a postcode by removing non-required zeros (e.g. S01 1JJ => S1 1JJ), ensuring that outcode and incode parts
      * are separated by a space (e.g. S11JJ => S1 1JJ) and converting the string to uppercase (e.g. s1 1jj => S1 1JJ).
@@ -24,15 +27,19 @@ public class PostcodeFormatter {
     public static String Format(String postcode) {
         
         String str = StringUtils.deleteWhitespace(postcode).toUpperCase();
+        // Remove all * from the string
+        str = str.replace("*", "");
         
+        // DELETE POSTCODE IF MATCHING THE IGNORE LIST
+        if (StringUtils.equalsAnyIgnoreCase(str, IGNORELIST)) {
+            return "";
+        }
+        
+        // IGNORE IF POSTCODE IS SHORTER THAN 5 CHARACTERS
         if (str.length() <= 4) {
             return str;
         }
         
-        if (StringUtils.equalsAnyIgnoreCase(str, new String[] {"AA22","AA88", "AA89", "AA90", "AA91", "WALES", "BT00"})) {
-            return "";
-        }
-
         // Split postcode into outward and inward parts
         int outEnd = str.length() - 3;
         outCode = str.substring(0, outEnd);
@@ -57,9 +64,9 @@ public class PostcodeFormatter {
         if (outCode.length() == 5 && !StringUtils.isNumeric(StringUtils.mid(outCode, 4, 1)) && StringUtils.mid(outCode, 2, 1).equals("0")) {
             outCode = StringUtils.mid(outCode, 0, 2) + StringUtils.mid(outCode, 3, 2);
         }
-
-        String temp = outCode + " " + inCode;
-        return temp.replace("*", "");
+        
+        // Join parts with a space        
+        return outCode + " " + inCode;
     }
     
     /**
@@ -69,11 +76,9 @@ public class PostcodeFormatter {
      * @return True if a valid UK postcode.
      */
     public static boolean validate(String postcode) {
-        
-        //'official' regex, once used by Roayl Mail
-        final String regex = " (GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY]))))\\s?[0-9][A-Z-[CIKMOV]]{2})";
-        Pattern pattern = Pattern.compile(regex);
-        
-        return pattern.matcher(postcode).matches();
+        Pattern pattern = Pattern.compile(REGEX);
+        String temp = postcode.replace("*", "");
+        temp = StringUtils.deleteWhitespace(temp).toUpperCase();
+        return StringUtils.equalsAnyIgnoreCase(temp, IGNORELIST) || pattern.matcher(temp).matches();
     }
 }
