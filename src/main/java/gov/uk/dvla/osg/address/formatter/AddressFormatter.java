@@ -1,4 +1,4 @@
-package gov.uk.dvla.osg.address;
+package gov.uk.dvla.osg.address.formatter;
 
 import java.util.regex.Pattern;
 

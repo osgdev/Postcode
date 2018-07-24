@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import gov.uk.dvla.osg.address.PostcodeFormatter;
+import gov.uk.dvla.osg.address.formatter.PostcodeFormatter;
 
 @RunWith(Parameterized.class)
 public class ParameterizedTests {
